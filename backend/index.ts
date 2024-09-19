@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors, {CorsOptions} from 'cors';
 import path from 'path';
+import usersRouter from './routers/users';
+import postsRouter from './routers/posts';
 
 const app = express();
 const port = 8000;
@@ -20,6 +22,9 @@ const corsOptions: CorsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/fixtures', express.static(path.join(__dirname, 'public/fixtures')));
+app.use('/users', usersRouter);
+app.use('/post', postsRouter);
+
 
 const run = async () => {
     await mongoose.connect('mongodb://localhost/forum');
