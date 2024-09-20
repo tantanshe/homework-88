@@ -7,11 +7,8 @@ import {CommentMutation} from '../types';
 
 const commentsRouter = express.Router();
 
-commentsRouter.get('/:postId', auth, async (req: RequestWithUser, res, next: NextFunction) => {
+commentsRouter.get('/:postId', async (req: RequestWithUser, res, next: NextFunction) => {
   try {
-    if (!req.user) {
-      return res.status(401).send({error: 'User not found'});
-    }
     const comments = await Comment.find({post: req.params.postId}).populate('author', 'username').sort({createdAt: -1});
     res.json(comments);
   } catch (error) {

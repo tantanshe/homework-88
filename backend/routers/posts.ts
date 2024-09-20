@@ -7,11 +7,8 @@ import {PostMutation} from '../types';
 
 const postsRouter = express.Router();
 
-postsRouter.get('/', auth, async (req: RequestWithUser, res, next: NextFunction) => {
+postsRouter.get('/', async (_req: RequestWithUser, res, next: NextFunction) => {
   try {
-    if (!req.user) {
-      return res.status(401).send({error: 'User not found'});
-    }
     const posts = await Post.find().populate('author', 'username').sort({createdAt: -1});
     res.json(posts);
   } catch (error) {
@@ -19,7 +16,7 @@ postsRouter.get('/', auth, async (req: RequestWithUser, res, next: NextFunction)
   }
 });
 
-postsRouter.get('/:id', auth, async (req: RequestWithUser, res, next: NextFunction) => {
+postsRouter.get('/:id', async (req: RequestWithUser, res, next: NextFunction) => {
   try {
     const post = await Post.findById(req.params.id).populate('author', 'username');
     if (!post) {

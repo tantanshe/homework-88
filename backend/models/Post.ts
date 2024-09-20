@@ -1,4 +1,4 @@
-import mongoose, {Types} from 'mongoose';
+import mongoose, {HydratedDocumentFromSchema, Types} from 'mongoose';
 import User from './User';
 
 const Schema = mongoose.Schema;
@@ -9,10 +9,24 @@ const PostSchema = new Schema({
     required: true,
   },
   description: {
-    type: String
+    type: String,
+    validate: {
+      async validator(value?: string) {
+        const currentDocument = (this as unknown as HydratedDocumentFromSchema<typeof PostSchema>);
+        return !!(value || currentDocument.image)
+      },
+      message: 'Either image or description must be present',
+    }
   },
   image: {
-    type: String
+    type: String,
+    validate: {
+      async validator(value?: string) {
+        const currentDocument = (this as unknown as HydratedDocumentFromSchema<typeof PostSchema>);
+        return !!(value || currentDocument.description)
+      },
+      message: 'Either image or description must be present',
+    }
   },
   author: {
     type: Schema.Types.ObjectId,
