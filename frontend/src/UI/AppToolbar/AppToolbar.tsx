@@ -46,6 +46,18 @@ const AppToolbar = () => {
               }}>
                 Logout
               </Button>
+              <Button component={NavLink} to="/posts/addPost" sx={{
+                backgroundColor: '#ffffff',
+                border: '2px solid #3f51b5',
+                borderRadius: '10px',
+                padding: '8px',
+                margin: '5px 0',
+                '&:hover': {
+                  backgroundColor: '#a7b2df',
+                },
+              }}>
+                Add new post
+              </Button>
             </Grid>
             ) : (
             <Grid item>

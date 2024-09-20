@@ -35,26 +35,20 @@ export interface Post {
   title: string;
   description?: string;
   image?: string;
-  author: User;
+  author: { _id: string; username: string };
   createdAt: string;
 }
 
 export interface Comment {
   _id: string;
   postId: string;
-  author: User;
+  author: { _id: string; username: string };
   text: string;
   createdAt: string;
 }
-
 
 export interface PostMutation {
   title: string;
   description?: string;
   image?: File | null;
-}
-
-export interface CommentMutation {
-  postId: string;
-  text: string;
 }
