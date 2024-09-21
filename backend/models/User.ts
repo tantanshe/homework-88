@@ -19,7 +19,6 @@ const UserSchema = new Schema<UserFields>({
         const user = await User.findOne({username: value});
         return !user;
       },
-      message: 'This user is already registered',
     }
   },
   password: {
